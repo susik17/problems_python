@@ -1,32 +1,39 @@
 arr1=[1,2,1,1,2]
 arr2=[2,2,1,2,1]
-Union=set()
+union=set()
 
-#brute
-def union_find(arr1,arr2):
-    n1=len(arr1)
-    n2=len(arr2)
-    
-    for i in range(n1):
-        for j in range(n2):
-            Union.add(arr1[i])
-            Union.add(arr2[j])
-    return list(Union)
+def find_union(arr1, arr2):
+    i, j = 0, 0  # Pointers
+    union = []  # Union list
+
+    while i < len(arr1) and j < len(arr2):
+        if arr1[i] <= arr2[j]:  # Case 1 and 2
+            if len(union) == 0 or union[-1] != arr1[i]:
+                union.append(arr1[i])
+            i += 1
+        else:  # Case 3
+            if len(union) == 0 or union[-1] != arr2[j]:
+                union.append(arr2[j])
+            j += 1
+
+    while i < len(arr1):  # If any elements left in arr1
+        if union[-1] != arr1[i]:
+            union.append(arr1[i])
+        i += 1
+
+    while j < len(arr2):  # If any elements left in arr2
+        if union[-1] != arr2[j]:
+            union.append(arr2[j])
+        j += 1
+
+    return union
 
 
-def unionfind(arr1,arr2):
-    for num in arr1:
-        Union.add(num)
-    for num in arr2:
-        Union.add(num)
-    return list(Union)
+union_ans = find_union(arr1, arr2)
 
-
-union1 = union_find(arr1, arr2)
-union2 = unionfind(arr1, arr2)
 
 print("Union of arr1 and arr2 is:")
-print(union1)
+print(union_ans)
 
         
                 
